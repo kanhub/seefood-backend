@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcrypt";
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
@@ -41,12 +42,15 @@ app.post("/signin", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const { email, name, pass } = req.body;
+  const { email, name, password } = req.body;
+  bcrypt.hash(password, 10, (err, hash) => {
+    console.log(hash);
+  });
   db.users.push({
     id: "125",
     name: name,
     email: email,
-    password: pass,
+    password: password,
     entries: 0,
     joined: new Date(),
   });
