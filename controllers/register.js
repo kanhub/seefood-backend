@@ -1,5 +1,10 @@
 const handleRegister = (db, bcrypt) => (req, res) => {
   const { email, name, password } = req.body;
+  if (name.trim() === "" || !email || !password) {
+    return res
+      .status(400)
+      .json("Unable to register, please provide valid fields");
+  }
   const hash = bcrypt.hashSync(password, 10);
   db.transaction((trx) => {
     trx

@@ -5,15 +5,17 @@ import knex from "knex";
 import handleRegister from "./controllers/register.js";
 import handleSignIn from "./controllers/signin.js";
 import handleProfileGet from "./controllers/profile.js";
-import handleImage from "./controllers/image.js";
+import { handleImage, handleApiCall } from "./controllers/image.js";
+
+const PORT = process.env.PORT || 3000;
 
 const db = knex({
   client: "pg",
   connection: {
-    host: "127.0.0.1",
-    user: "kanisk",
-    password: "",
-    database: "seefood",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
   },
 });
 
@@ -34,6 +36,8 @@ app.get("/profile/:id", handleProfileGet(db));
 
 app.put("/image", handleImage(db));
 
-app.listen(3000, () => {
-  console.log("App running on port 3000");
+app.post("/imageurl", handleApiCall);
+
+app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}`);
 });
