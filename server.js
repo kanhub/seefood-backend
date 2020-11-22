@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send(db.users);
+  res.send("Server is up and running!");
 });
 
 app.post("/signin", handleSignIn(db, bcrypt));
