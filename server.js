@@ -9,6 +9,11 @@ import { handleImage, handleApiCall } from "./controllers/image.js";
 
 const PORT = process.env.PORT || 3000;
 
+const app = express();
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 const db = knex({
   client: "pg",
   connection: {
@@ -16,11 +21,6 @@ const db = knex({
     ssl: true,
   },
 });
-
-const app = express();
-app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Server is up and running!");
